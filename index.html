@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Delta</title>
+  <title>Delta Studying</title>
   <style>
     body {
       margin: 0;
@@ -71,7 +71,7 @@
   </style>
 </head>
 <body>
-  <header>Delta Games</header>
+  <header>Math Activities</header>
   <div id="games-list"></div>
   <div id="game-container">
     <button id="back-btn">← Back</button>
@@ -79,48 +79,48 @@
   </div>
 
   <script>
-    const jsonUrl = 'https://raw.githubusercontent.com/swarmintelli/Unblocked-Games-CDN/main/games.json';
+    // 🔹 Local list of games (just update this with your own)
+    const games = [
+      {
+        name: "Run 3",
+        icon: "games/run3/icon.png",
+        path: "games/run3/index.html"
+      },
+      {
+        name: "Slope",
+        icon: "games/slope/icon.png",
+        path: "games/slope/index.html"
+      },
+      {
+        name: "Retro Bowl",
+        icon: "games/retrobowl/icon.png",
+        path: "games/retrobowl/index.html"
+      }
+      // Add more games here...
+    ];
 
     const gamesListEl = document.getElementById('games-list');
     const gameContainerEl = document.getElementById('game-container');
     const backBtn = document.getElementById('back-btn');
     const iframeEl = document.getElementById('game-iframe');
 
-    // Fetch and render games list
-    async function loadGames() {
-      try {
-        const response = await fetch(jsonUrl);
-        const games = await response.json();
-
-        games.forEach(game => {
-          const card = document.createElement('div');
-          card.className = 'game-card';
-          card.innerHTML = `
-            <img src="${game.game_image_icon}" alt="${game.name}" />
-            <p>${game.name}</p>
-          `;
-          card.addEventListener('click', () => playGame(game));
-          gamesListEl.appendChild(card);
-        });
-      } catch (err) {
-        console.error('Error loading games:', err);
-        gamesListEl.innerText = 'Failed to load games. Please try again later.';
-      }
+    function loadGames() {
+      games.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerHTML = `
+          <img src="${game.icon}" alt="${game.name}" />
+          <p>${game.name}</p>
+        `;
+        card.addEventListener('click', () => playGame(game));
+        gamesListEl.appendChild(card);
+      });
     }
 
     function playGame(game) {
       gamesListEl.style.display = 'none';
       gameContainerEl.style.display = 'block';
-
-      // Use provided iframe code if available, else construct minimal iframe
-      if (game.iframe) {
-        gameContainerEl.innerHTML = `<button id="back-btn">← Back</button>${game.iframe}`;
-        gameContainerEl.querySelector('#back-btn').onclick = backToList;
-      } else {
-        iframeEl.src = game.game_url || '';
-        backBtn.onclick = backToList;
-        iframeEl.parentElement.style.display = 'block';
-      }
+      iframeEl.src = game.path;
     }
 
     function backToList() {
@@ -129,7 +129,9 @@
       iframeEl.src = '';
     }
 
+    backBtn.onclick = backToList;
     window.onload = loadGames;
   </script>
 </body>
 </html>
+
