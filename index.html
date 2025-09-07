@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Unblocked Games</title>
   <style>
-    body { margin:0; font-family:sans-serif; background:#f4f4f9; }
+    body { margin:0; font-family:Arial, sans-serif; background:#f4f4f9; }
     header { background:#222; color:#fff; padding:1rem; text-align:center; font-size:1.5rem; }
     #games-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; padding:1rem; }
     .game-card { background:#fff; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); cursor:pointer; transition:0.2s; }
@@ -25,53 +25,43 @@
   </div>
 
   <script>
-    // 🔹 List your locally hosted games here
-   async function loadGames() {
-  const response = await fetch('games.json'); // 👈 your local copy
-  const games = await response.json();
+    async function loadGames() {
+      try {
+        // Load your local JSON file
+        const response = await fetch("games/games.json");
+        const games = await response.json();
 
-  games.forEach(game => {
-    const card = document.createElement('div');
-    card.className = 'game-card';
-    card.innerHTML = `
-      <img src="${game.game_image_icon}" alt="${game.name}">
-      <p>${game.name}</p>
-    `;
-    card.onclick = () => playGame(game);
-    document.getElementById('games-list').appendChild(card);
-  });
-}
+        const list = document.getElementById("games-list");
 
-function playGame(game) {
-  document.getElementById('games-list').style.display = 'none';
-  document.getElementById('game-container').style.display = 'block';
-  document.getElementById('game-iframe').src = "games/" + game.folder_name + "/index.html"; 
-}
+        games.forEach(game => {
+          // Create game card
+          const card = document.createElement("div");
+          card.className = "game-card";
+          card.innerHTML = `
+            <img src="games/${game.folder_name}/icon.png" alt="${game.name}">
+            <p>${game.name}</p>
+          `;
+          // On click → open the game
+          card.onclick = () => {
+            list.style.display = "none";
+            document.getElementById("game-container").style.display = "block";
+            document.getElementById("game-iframe").src = "games/" + game.folder_name + "/index.html";
+          };
+          list.appendChild(card);
+        });
+      } catch (err) {
+        console.error("Error loading games.json", err);
+      }
+    }
 
-window.onload = loadGames;
-
-    const list = document.getElementById('games-list');
-    const container = document.getElementById('game-container');
-    const backBtn = document.getElementById('back-btn');
-    const iframe = document.getElementById('game-iframe');
-
-    games.forEach(game => {
-      const card = document.createElement('div');
-      card.className = 'game-card';
-      card.innerHTML = `<img src="${game.icon}" alt="${game.name}"><p>${game.name}</p>`;
-      card.onclick = () => {
-        list.style.display = 'none';
-        container.style.display = 'block';
-        iframe.src = game.path;
-      };
-      list.appendChild(card);
-    });
-
-    backBtn.onclick = () => {
-      container.style.display = 'none';
-      list.style.display = 'grid';
-      iframe.src = '';
+    document.getElementById("back-btn").onclick = () => {
+      document.getElementById("game-container").style.display = "none";
+      document.getElementById("games-list").style.display = "grid";
+      document.getElementById("game-iframe").src = "";
     };
+
+    // Run on page load
+    loadGames();
   </script>
 </body>
 </html>
