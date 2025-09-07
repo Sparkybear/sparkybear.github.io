@@ -34,19 +34,24 @@
         const list = document.getElementById("games-list");
 
         games.forEach(game => {
+          // Each game-id corresponds to a local folder
+          const folder = game["game-id"];
+
           // Create game card
           const card = document.createElement("div");
           card.className = "game-card";
           card.innerHTML = `
-            <img src="games/${game.folder_name}/icon.png" alt="${game.name}">
+            <img src="games/${folder}/icon.png" alt="${game.name}">
             <p>${game.name}</p>
           `;
-          // On click → open the game
+
+          // On click → open the local game
           card.onclick = () => {
             list.style.display = "none";
             document.getElementById("game-container").style.display = "block";
-            document.getElementById("game-iframe").src = "games/" + game.folder_name + "/index.html";
+            document.getElementById("game-iframe").src = "games/" + folder + "/index.html";
           };
+
           list.appendChild(card);
         });
       } catch (err) {
