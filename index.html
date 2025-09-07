@@ -2,76 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Delta Studying</title>
+  <title>Unblocked Games</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
-    }
-    header {
-      background-color: #343a40;
-      color: #fff;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
-    }
-    #games-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-      padding: 1rem;
-    }
-    .game-card {
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      overflow: hidden;
-      cursor: pointer;
-      text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .game-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .game-card img {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-    }
-    .game-card p {
-      margin: 0.5rem;
-      font-weight: bold;
-    }
-    #game-container {
-      display: none;
-      position: relative;
-      height: 100vh;
-    }
-    #back-btn {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: rgba(52,58,64,0.8);
-      border: none;
-      color: white;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border-radius: 4px;
-      font-size: 1rem;
-      z-index: 999;
-    }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
+    body { margin:0; font-family:sans-serif; background:#f4f4f9; }
+    header { background:#222; color:#fff; padding:1rem; text-align:center; font-size:1.5rem; }
+    #games-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; padding:1rem; }
+    .game-card { background:#fff; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); cursor:pointer; transition:0.2s; }
+    .game-card:hover { transform:translateY(-4px); box-shadow:0 6px 12px rgba(0,0,0,0.2); }
+    .game-card img { width:100%; height:120px; object-fit:cover; border-top-left-radius:10px; border-top-right-radius:10px; }
+    .game-card p { margin:0.5rem; font-weight:bold; text-align:center; }
+    #game-container { display:none; position:relative; height:100vh; }
+    #back-btn { position:absolute; top:10px; left:10px; z-index:999; background:#222; color:#fff; border:none; border-radius:5px; padding:0.5rem 1rem; cursor:pointer; }
+    iframe { width:100%; height:100%; border:none; }
   </style>
 </head>
 <body>
-  <header>Math Activities</header>
+  <header>Unblocked Games</header>
   <div id="games-list"></div>
   <div id="game-container">
     <button id="back-btn">← Back</button>
@@ -79,59 +25,35 @@
   </div>
 
   <script>
-    // 🔹 Local list of games (just update this with your own)
+    // 🔹 List your locally hosted games here
     const games = [
-      {
-        name: "Run 3",
-        icon: "games/run3/icon.png",
-        path: "games/run3/index.html"
-      },
-      {
-        name: "Slope",
-        icon: "games/slope/icon.png",
-        path: "games/slope/index.html"
-      },
-      {
-        name: "Retro Bowl",
-        icon: "games/retrobowl/icon.png",
-        path: "games/retrobowl/index.html"
-      }
-      // Add more games here...
+      { name: "Run 3",   icon: "games/run3/icon.png",   path: "games/run3/index.html" },
+      { name: "Slope",   icon: "games/slope/icon.png",  path: "games/slope/index.html" },
+      { name: "Retro Bowl", icon: "games/retrobowl/icon.png", path: "games/retrobowl/index.html" }
     ];
 
-    const gamesListEl = document.getElementById('games-list');
-    const gameContainerEl = document.getElementById('game-container');
+    const list = document.getElementById('games-list');
+    const container = document.getElementById('game-container');
     const backBtn = document.getElementById('back-btn');
-    const iframeEl = document.getElementById('game-iframe');
+    const iframe = document.getElementById('game-iframe');
 
-    function loadGames() {
-      games.forEach(game => {
-        const card = document.createElement('div');
-        card.className = 'game-card';
-        card.innerHTML = `
-          <img src="${game.icon}" alt="${game.name}" />
-          <p>${game.name}</p>
-        `;
-        card.addEventListener('click', () => playGame(game));
-        gamesListEl.appendChild(card);
-      });
-    }
+    games.forEach(game => {
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.innerHTML = `<img src="${game.icon}" alt="${game.name}"><p>${game.name}</p>`;
+      card.onclick = () => {
+        list.style.display = 'none';
+        container.style.display = 'block';
+        iframe.src = game.path;
+      };
+      list.appendChild(card);
+    });
 
-    function playGame(game) {
-      gamesListEl.style.display = 'none';
-      gameContainerEl.style.display = 'block';
-      iframeEl.src = game.path;
-    }
-
-    function backToList() {
-      gameContainerEl.style.display = 'none';
-      gamesListEl.style.display = 'grid';
-      iframeEl.src = '';
-    }
-
-    backBtn.onclick = backToList;
-    window.onload = loadGames;
+    backBtn.onclick = () => {
+      container.style.display = 'none';
+      list.style.display = 'grid';
+      iframe.src = '';
+    };
   </script>
 </body>
 </html>
-
